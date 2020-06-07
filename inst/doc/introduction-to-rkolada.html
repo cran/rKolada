@@ -365,7 +365,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb4-2"><a href="#cb4-2"></a>kpi_df &lt;-<span class="st"> </span><span class="kw">get_kpi</span>()</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a>kpi_df</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; # A tibble: 4,679 x 13</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; # A tibble: 4,688 x 13</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span></span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;  1 E        Personalko… FALSE       N000…                0 K               </span></span>
@@ -378,7 +378,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  8 &lt;NA&gt;     Utjämnings… FALSE       N000…                0 K               </span></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  9 X        Införandeb… FALSE       N000…                0 K               </span></span>
 <span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 10 X        Strukturbi… FALSE       N000…                0 K               </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; # … with 4,669 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; # … with 4,678 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span></span>
 <span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span></span>
 <span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></span></code></pre></div>
 <p>All <code>get</code> functions are thin wrappers around the more general function <code>get_metadata()</code>. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.</p>
@@ -392,7 +392,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Search for KPIs with the term &quot;BRP&quot; in their description or title</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>kpi_filter &lt;-<span class="st"> </span>kpi_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kpi_search</span>(<span class="st">&quot;skola&quot;</span>, <span class="dt">column =</span> <span class="kw">c</span>(<span class="st">&quot;description&quot;</span>, <span class="st">&quot;title&quot;</span>))</span>
 <span id="cb5-3"><a href="#cb5-3"></a>kpi_filter</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; # A tibble: 621 x 13</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; # A tibble: 622 x 13</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span></span>
 <span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span></span>
 <span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  1 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span></span>
@@ -404,8 +404,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  7 E        Årsarbetar… FALSE       N001…                0 K               </span></span>
 <span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  8 X        Antal invå… FALSE       N017…                0 K               </span></span>
 <span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  9 X        Investerin… FALSE       N031…                0 K               </span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 10 T        Bruttokost… FALSE       N090…                0 K               </span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; # … with 611 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 10 X        Investerin… FALSE       N031…                0 K               </span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; # … with 612 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span></span>
 <span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span></span>
 <span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></span>
 <span id="cb5-20"><a href="#cb5-20"></a></span>
@@ -486,7 +486,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb7-5"><a href="#cb7-5"></a>kpis_with_keywords <span class="op">%&gt;%</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">pivot_longer</span>(dplyr<span class="op">::</span><span class="kw">starts_with</span>(<span class="st">&quot;keyword&quot;</span>), <span class="dt">values_to =</span> <span class="st">&quot;keyword&quot;</span>) <span class="op">%&gt;%</span></span>
 <span id="cb7-7"><a href="#cb7-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(keyword, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; # A tibble: 304 x 2</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; # A tibble: 305 x 2</span></span>
 <span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;    keyword            n</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;    &lt;chr&gt;          &lt;int&gt;</span></span>
 <span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  1 elever           126</span></span>
@@ -498,8 +498,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt;  7 studerar          58</span></span>
 <span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt;  8 förskola          57</span></span>
 <span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt;  9 kostnad           57</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt; 10 år                55</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a><span class="co">#&gt; # … with 294 more rows</span></span></code></pre></div>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt; 10 kr                55</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="co">#&gt; # … with 295 more rows</span></span></code></pre></div>
 <p>Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, <code>kpi_minimize()</code> can be used to remove all redundant columns from a KPI table. (In this case, “redundant” means &quot;containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Top 10 rows of the table</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>kpi_filter <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span>
@@ -515,7 +515,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;  7 E        Årsarbetar… FALSE       N001…                0 K               </span></span>
 <span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;  8 X        Antal invå… FALSE       N017…                0 K               </span></span>
 <span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;  9 X        Investerin… FALSE       N031…                0 K               </span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; 10 T        Bruttokost… FALSE       N090…                0 K               </span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; 10 X        Investerin… FALSE       N031…                0 K               </span></span>
 <span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; # … with 7 more variables: operating_area &lt;chr&gt;, ou_publication_date &lt;chr&gt;,</span></span>
 <span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; #   perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;, publ_period &lt;chr&gt;,</span></span>
 <span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt; #   publication_date &lt;chr&gt;, title &lt;chr&gt;</span></span>
@@ -533,8 +533,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt;  6 N001… Måna… Månadsavlö… Barn och utbi… Resurser    &lt;NA&gt;            </span></span>
 <span id="cb8-31"><a href="#cb8-31"></a><span class="co">#&gt;  7 N001… Årsa… Årsarbetar… Barn och utbi… Resurser    &lt;NA&gt;            </span></span>
 <span id="cb8-32"><a href="#cb8-32"></a><span class="co">#&gt;  8 N017… Invå… Antal invå… Befolkning     Volymer,Öv… &lt;NA&gt;            </span></span>
-<span id="cb8-33"><a href="#cb8-33"></a><span class="co">#&gt;  9 N031… Inve… Investerin… Barn och utbi… Resurser    &lt;NA&gt;            </span></span>
-<span id="cb8-34"><a href="#cb8-34"></a><span class="co">#&gt; 10 N090… Kost… Bruttokost… Kommunen, öve… Resurser    2020-04-08      </span></span>
+<span id="cb8-33"><a href="#cb8-33"></a><span class="co">#&gt;  9 N031… Inve… Investerin… Barn och utbi… Resurser    2020-04-08      </span></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="co">#&gt; 10 N031… Inve… Investerin… Barn och utbi… Resurser    &lt;NA&gt;            </span></span>
 <span id="cb8-35"><a href="#cb8-35"></a><span class="co">#&gt; # … with 2 more variables: publ_period &lt;chr&gt;, publication_date &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div id="metadata-groups" class="section level3">
