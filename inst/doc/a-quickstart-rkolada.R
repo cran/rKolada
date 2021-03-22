@@ -15,6 +15,7 @@ munic <- get_municipality(cache = FALSE)
 dplyr::glimpse(kpis)
 
 ## -----------------------------------------------------------------------------
+# Get a list KPIs matching a search for "BRP" (Gross regional product)
 kpi_res <- kpis %>%
   kpi_search("BRP") %>%
   kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)

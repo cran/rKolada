@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](quickstart-rkolada.html).
+`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](a-quickstart-rkolada.html).
 
 NOTE: All metadata and data labels in Kolada are written in Swedish only.
 
@@ -57,7 +57,7 @@ If the user already has knowledge of the IDs of the KPIs and/or municipalities t
 ```{r}
 n00945 <- get_values(
   kpi = "N00945",
-  municipality = "G123833",
+  municipality = c("0180", "1480", "1280"),
   period = 1970:2020
 )
 
@@ -128,7 +128,7 @@ kpis_with_keywords %>%
   dplyr::count(keyword, sort = TRUE)
 ```
 
-Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, `kpi_minimize()` can be used to remove all redundant columns from a KPI table. (In this case, "redundant" means "containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):
+Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, `kpi_minimize()` can be used to remove all redundant columns from a KPI table. (In this case, "redundant" means "containing no information that helps in differentiating KPIs from one another", i.e. columns containing only one single value for all observations in the table):
 
 ```{r}
 # Top 10 rows of the table
@@ -138,6 +138,7 @@ kpi_filter %>% dplyr::slice(1:10)
 kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
 ```
 
+Note that `kpi_minimize()` operates on the _current table_. This means that results may vary depending on the data you're operating on.
 
 ### Metadata groups
 
@@ -160,28 +161,30 @@ kpi_filter <- get_kpi() %>%
   kpi_search("BRP")
 # Creates a table with two rows
 
+# Get a suitable group of municipalities
 munic_grp_filter <- get_municipality_groups() %>% 
   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
 # Creates a table with one group of 7 municipalities
 
-arboga_filter <- get_municipality() %>% municipality_search("Arboga")
+# Also include Arboga itself
+arboga <- get_municipality() %>% municipality_search("Arboga")
 
-# Get values
+# Get data
 grp_data <- get_values(
   kpi = kpi_extract_ids(kpi_filter),
   municipality = c(
     municipality_grp_extract_ids(munic_grp_filter),
-    municipality_extract_ids(arboga_filter)
+    municipality_extract_ids(arboga)
   )
 )
 
 # Visualize results
 library("ggplot2")
 ggplot(grp_data, aes(year, value, color = municipality)) +
-  geom_line() +
+  geom_line(aes(linetype = municipality)) +
   facet_grid(kpi ~ ., scales = "free") +
   labs(
-    title = "Gross Regional Product 2012-2017",
+    title = "Gross Regional Product per capita 2012-2018",
     subtitle = "Swedish municipalities similar to Arboga",
     caption = values_legend(grp_data, kpi_filter)
   ) +
