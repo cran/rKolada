@@ -51,22 +51,12 @@ is omitted, all available data for that dimension will be downloaded.
 \examples{
 # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 # for three municipalities
-brp_kpi <- get_kpi(
-  id = c("N03068", "N03069", "N03070", "N03700", "N03701")
-) \%>\%
- kpi_search("BRP") \%>\%
- kpi_extract_ids()
-
-munic_sample <- get_municipality() \%>\%
-  municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
-
-grp_data <- get_values(
-  kpi = brp_kpi,
-  municipality = munic_sample
-)
+if (kolada_available()) {
 
 # If you already know the ID numbers you are looking for,
 # you can use these directly as argments.
+# Otherwise, use the get_\*() functions in combination with \*_search()
+# functions to find good parameter values.
 grp_data <- get_values(
   kpi = c("N03700", "N03701"),
   municipality = c("0180", "1480", "1280")
@@ -79,5 +69,6 @@ ou_data <- get_values(
  ou = "V15E144001101",
  unit_type = "ou"
 )
+}
 
 }

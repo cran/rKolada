@@ -1,3 +1,13 @@
+# rKolada 0.2.3
+
+- Add `kolada_available()` for programming with the `rKolada` package
+- Fix vignettes and examples so they don't crash when the Kolada API is unavailable
+
+# rKolada 0.2.2
+
+- Correctly print URLs on `verbose = TRUE` (#6)
+- Check if the Kolada API is availoable using `kolada_available()`
+
 # rKolada 0.2.1
 
 - data downloaders fail gracefully when using bad KPI names

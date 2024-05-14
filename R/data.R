@@ -109,22 +109,12 @@ compose_data_query <- function(
 #' @examples
 #' # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 #' # for three municipalities
-#' brp_kpi <- get_kpi(
-#'   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
-#' ) %>%
-#'  kpi_search("BRP") %>%
-#'  kpi_extract_ids()
-#'
-#' munic_sample <- get_municipality() %>%
-#'   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
-#'
-#' grp_data <- get_values(
-#'   kpi = brp_kpi,
-#'   municipality = munic_sample
-#' )
+#' if (kolada_available()) {
 #'
 #' # If you already know the ID numbers you are looking for,
 #' # you can use these directly as argments.
+#' # Otherwise, use the get_\*() functions in combination with \*_search()
+#' # functions to find good parameter values.
 #' grp_data <- get_values(
 #'   kpi = c("N03700", "N03701"),
 #'   municipality = c("0180", "1480", "1280")
@@ -137,6 +127,7 @@ compose_data_query <- function(
 #'  ou = "V15E144001101",
 #'  unit_type = "ou"
 #' )
+#' }
 #'
 #' @export
 get_values <- function(
@@ -151,7 +142,7 @@ get_values <- function(
 ) {
 
   if (isTRUE(verbose))
-    message("Downloading Kolada metadata using URL(s):")
+    message("Downloading Kolada data using URL(s):")
 
   next_page <- TRUE
   page <- 1
@@ -166,8 +157,8 @@ get_values <- function(
 
     query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = page_size)
 
-    # if (isTRUE(verbose))
-    #   message(query)
+    if (isTRUE(verbose))
+      message(query)
 
     res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
 
@@ -177,12 +168,18 @@ get_values <- function(
     }
 
     contents_raw <- httr::content(res, as = "text")
-    contents <- jsonlite::fromJSON(contents_raw)
+    contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
+
+    if(inherits(contents, "try-error")) {
+      warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
 
     if(length(contents$values) == 0) {
       warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
       return(NULL)
     }
+
 
     if(page == 1)
       vals <- tibble::as_tibble(contents$values)
@@ -200,7 +197,7 @@ get_values <- function(
   }
 
   ret <- vals %>%
-    tidyr::unnest(cols = c(.data$values))
+    tidyr::unnest(cols = c("values"))
 
   if (isTRUE(simplify) & unit_type == "municipality") {
     ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))
@@ -217,7 +214,7 @@ get_values <- function(
 
     ret <- ret %>%
       # Remove "status" column (does it ever contain anything?)
-      dplyr::select(-.data$status) %>%
+      # dplyr::select(-.data$status) %>%
       # Convert codes to names
       dplyr::rename(
         municipality_id = .data$municipality
@@ -270,12 +267,14 @@ get_values <- function(
 #' @examples
 #' # Download values for all available years of a given KPI for
 #' # Malmö municipality (code 1280)
+#' if (kolada_available()) {
 #' vals <- get_values(kpi = "N45933", municipality = "1280", simplify = TRUE)
 #' # (Returns a table with 5 rows and 8 columns)
 #'
 #' # Remove columns with no information to differentiate between rows
 #' values_minimize(vals)
 #' # (Returns a table with 5 rows and 4 columns)
+#' }
 #' @export
 
 values_minimize <- function(values_df) {

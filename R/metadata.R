@@ -147,7 +147,12 @@ get_metadata <- function(
     }
 
     contents_raw <- httr::content(res, as = "text")
-    contents <- jsonlite::fromJSON(contents_raw)
+    contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
+
+    if(inherits(contents, "try-error")) {
+      warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
 
     if(page == 1)
       vals <- tibble::as_tibble(contents$values)
@@ -203,7 +208,9 @@ get_metadata <- function(
 #' @examples
 #' # Download KPI table and store a cache copy of the results in a temporary folder
 #' # (to actually download all available data, don't specify max_results)
+#' if (kolada_available()) {
 #' kpi_df <- get_kpi(cache = TRUE, max_results = 100)
+#' }
 #'
 #' @export
 get_kpi <- function(

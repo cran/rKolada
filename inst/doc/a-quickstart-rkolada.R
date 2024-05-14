@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -7,9 +7,13 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library("rKolada")
 
-## -----------------------------------------------------------------------------
-kpis <- get_kpi(cache = FALSE)
-munic <- get_municipality(cache = FALSE)
+## ----echo = FALSE-------------------------------------------------------------
+kpis <- rKolada:::kpi_df
+munic <- rKolada:::munic
+
+## ----eval = FALSE-------------------------------------------------------------
+#  kpis <- get_kpi(cache = FALSE)
+#  munic <- get_municipality(cache = FALSE)
 
 ## -----------------------------------------------------------------------------
 dplyr::glimpse(kpis)
@@ -18,6 +22,8 @@ dplyr::glimpse(kpis)
 # Get a list KPIs matching a search for "BRP" (Gross regional product)
 kpi_res <- kpis %>%
   kpi_search("BRP") %>%
+  # Keep only KPIs with data for the municipality level
+  kpi_search("K", column = "municipality_type") %>%
   kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
@@ -31,18 +37,21 @@ munic_res <- munic %>%
 
 dplyr::glimpse(munic_res)
 
-## ---- echo = TRUE, results='asis'---------------------------------------------
+## ----echo = TRUE, results='asis'----------------------------------------------
 kpi_res %>%
   kpi_bind_keywords(n = 4) %>% 
   kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
 
-## -----------------------------------------------------------------------------
-kld_data <- get_values(
-  kpi = kpi_extract_ids(kpi_res),
-  municipality = municipality_extract_ids(munic_res),
-  period = 1990:2019,
-  simplify = TRUE
-)
+## ----echo = FALSE-------------------------------------------------------------
+kld_data <- rKolada:::kld_data
+
+## ----eval = FALSE-------------------------------------------------------------
+#  kld_data <- get_values(
+#    kpi = kpi_extract_ids(kpi_res),
+#    municipality = municipality_extract_ids(munic_res),
+#    period = 1990:2019,
+#    simplify = TRUE
+#  )
 
 ## -----------------------------------------------------------------------------
 # Visualise results
