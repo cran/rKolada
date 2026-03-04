@@ -12,8 +12,8 @@ kpis <- rKolada:::kpi_df
 munic <- rKolada:::munic
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  kpis <- get_kpi(cache = FALSE)
-#  munic <- get_municipality(cache = FALSE)
+# kpis <- get_kpi(cache = FALSE)
+# munic <- get_municipality(cache = FALSE)
 
 ## -----------------------------------------------------------------------------
 dplyr::glimpse(kpis)
@@ -24,7 +24,7 @@ kpi_res <- kpis %>%
   kpi_search("BRP") %>%
   # Keep only KPIs with data for the municipality level
   kpi_search("K", column = "municipality_type") %>%
-  kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
+  kpi_minimize(remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
 
@@ -46,12 +46,12 @@ kpi_res %>%
 kld_data <- rKolada:::kld_data
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  kld_data <- get_values(
-#    kpi = kpi_extract_ids(kpi_res),
-#    municipality = municipality_extract_ids(munic_res),
-#    period = 1990:2019,
-#    simplify = TRUE
-#  )
+# kld_data <- get_values(
+#   kpi = kpi_extract_ids(kpi_res),
+#   municipality = municipality_extract_ids(munic_res),
+#   period = 1990:2019,
+#   simplify = TRUE
+# )
 
 ## -----------------------------------------------------------------------------
 # Visualise results

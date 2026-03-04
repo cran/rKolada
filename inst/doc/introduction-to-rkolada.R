@@ -5,8 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----install, eval = FALSE----------------------------------------------------
-#  install.packages("tidyverse")
-#  install.packages("rKolada")
+# install.packages("tidyverse")
+# install.packages("rKolada")
 
 ## ----setup--------------------------------------------------------------------
 library("rKolada")
@@ -15,23 +15,23 @@ library("rKolada")
 (n00945 <- rKolada:::n00945)
 
 ## ----datapoint_mock, eval = FALSE---------------------------------------------
-#  n00945 <- get_values(
-#    kpi = "N00945",
-#    municipality = c("0180", "1480", "1280"),
-#    period = 1970:2020
-#  )
-#  
-#  n00945
+# n00945 <- get_values(
+#   kpi = "N00945",
+#   municipality = c("0180", "1480", "1280"),
+#   period = 1970:2020
+# )
+# 
+# n00945
 
 ## ----kpi_df, echo = FALSE-----------------------------------------------------
 kpi_df <- rKolada:::kpi_df
 head(kpi_df, n = 10)
 
 ## ----kpi_df_mock, eval = FALSE------------------------------------------------
-#  # Download all KPI metadata as a tibble (kpi_df)
-#  kpi_df <- get_kpi()
-#  
-#  head(kpi_df, n = 10)
+# # Download all KPI metadata as a tibble (kpi_df)
+# kpi_df <- get_kpi()
+# 
+# head(kpi_df, n = 10)
 
 ## ----kpi_filter---------------------------------------------------------------
 # Search for KPIs with the term "BRP" in their description or title
@@ -42,8 +42,8 @@ kpi_filter
 (munic_g <- rKolada:::munic_g)
 
 ## ----munic_g_mock, eval = FALSE-----------------------------------------------
-#  # Search for municipality groups containing the name "Arboga"
-#  munic_g <- get_municipality_groups()
+# # Search for municipality groups containing the name "Arboga"
+# munic_g <- get_municipality_groups()
 
 ## ----arboga_groups------------------------------------------------------------
 arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
@@ -75,28 +75,28 @@ arboga <- rKolada:::arboga
 grp_data <- rKolada:::grp_data
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # Get KPIs describing Gross Regional Product of municipalities
-#  kpi_filter <- get_kpi() %>%
-#    kpi_search("BRP") %>%
-#    kpi_search("K", column = "municipality_type")
-#  # Creates a table with two rows
-#  
-#  # Get a suitable group of municipalities
-#  munic_grp_filter <- get_municipality_groups() %>%
-#    municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
-#  # Creates a table with one group of 7 municipalities
-#  
-#  # Also include Arboga itself
-#  arboga <- get_municipality() %>% municipality_search("Arboga")
-#  
-#  # Get data
-#  grp_data <- get_values(
-#    kpi = kpi_extract_ids(kpi_filter),
-#    municipality = c(
-#      municipality_grp_extract_ids(munic_grp_filter),
-#      municipality_extract_ids(arboga)
-#    )
-#  )
+# # Get KPIs describing Gross Regional Product of municipalities
+# kpi_filter <- get_kpi() %>%
+#   kpi_search("bruttoregionprodukt") %>%
+#   kpi_search("K", column = "municipality_type")
+# # Creates a table with two rows
+# 
+# # Get a suitable group of municipalities
+# munic_grp_filter <- get_municipality_groups() %>%
+#   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
+# # Creates a table with one group of 7 municipalities
+# 
+# # Also include Arboga itself
+# arboga <- get_municipality() %>% municipality_search("Arboga")
+# 
+# # Get data
+# grp_data <- get_values(
+#   kpi = kpi_extract_ids(kpi_filter),
+#   municipality = c(
+#     municipality_grp_extract_ids(munic_grp_filter),
+#     municipality_extract_ids(arboga)
+#   )
+# )
 
 ## -----------------------------------------------------------------------------
 # Visualize results

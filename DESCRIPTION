@@ -1,7 +1,7 @@
 Package: rKolada
 Type: Package
 Title: Access Data from the 'Kolada' Database
-Version: 0.2.3
+Version: 0.3.0
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre", "cph"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
@@ -11,15 +11,16 @@ URL: https://lchansson.github.io/rKolada/,
         https://github.com/lchansson/rKolada
 BugReports: https://github.com/lchansson/rKolada/issues
 Encoding: UTF-8
-Suggests: testthat, knitr, rmarkdown, stringi, ggplot2, scales,
-        progress
-RoxygenNote: 7.3.1
-Imports: tibble, dplyr, glue, stringr, httr, jsonlite, magrittr, tidyr,
-        purrr, rlang, urltools
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown, stringi, ggplot2,
+        scales, progress
+Config/testthat/edition: 3
+RoxygenNote: 7.3.3
+Imports: tibble, dplyr, glue, stringr, httr2, jsonlite, magrittr,
+        tidyr, purrr, rlang
 VignetteBuilder: knitr
-Depends: R (>= 4.0.0)
+Depends: R (>= 4.1.0)
 NeedsCompilation: no
-Packaged: 2024-05-12 13:07:36 UTC; lchansson
+Packaged: 2026-03-04 12:30:19 UTC; tgslhn
 Author: Love Hansson [aut, cre, cph]
 Repository: CRAN
-Date/Publication: 2024-05-14 07:30:05 UTC
+Date/Publication: 2026-03-04 12:50:02 UTC
